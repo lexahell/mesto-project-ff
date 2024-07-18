@@ -8,6 +8,7 @@ function createCardElement(card, removeCardElement) {
   const cardDeleteButton = cardElement.querySelector('.card__delete-button');
 
   cardTitle.textContent = card.name;
+  cardImg.alt = card.name;
   cardImg.src = card.link;
   cardDeleteButton.addEventListener('click', () => {
     removeCardElement(cardElement);
