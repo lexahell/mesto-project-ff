@@ -2,10 +2,15 @@ import './pages/index.css';
 import initialCards from './data/cards.js';
 import {
   createCardElement,
+  handleCardImgClick,
   handleCardLikeClick,
   removeCardElement,
 } from './components/card.js';
-import { closeModal, openModal } from './components/modal.js';
+import {
+  closeModal,
+  handleClickOnOverlay,
+  openModal,
+} from './components/modal.js';
 
 const placeList = document.querySelector('.places__list');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -34,14 +39,24 @@ function handleNewPlaceFormSubmit(evt) {
     link: newPlaceForm.elements['link'].value,
   };
   placeList.prepend(
-    createCardElement(newCard, removeCardElement, handleCardLikeClick)
+    createCardElement(
+      newCard,
+      removeCardElement,
+      handleCardLikeClick,
+      handleCardImgClick
+    )
   );
   closeModal(popupTypeNewCard);
 }
 
 initialCards.forEach((card) => {
   placeList.append(
-    createCardElement(card, removeCardElement, handleCardLikeClick)
+    createCardElement(
+      card,
+      removeCardElement,
+      handleCardLikeClick,
+      handleCardImgClick
+    )
   );
 });
 
@@ -51,23 +66,21 @@ profileEditButton.addEventListener('click', () => {
     '.profile__description'
   ).textContent;
   openModal(popupTypeEdit);
-  editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 });
 
 profileAddButton.addEventListener('click', () => {
   newPlaceForm.reset();
   openModal(popupTypeNewCard);
-  newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
 });
+
+editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
+
+newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
 
 popups.forEach((popup) => {
   const closeButton = popup.querySelector('.popup__close');
   closeButton.addEventListener('click', () => {
     closeModal(popup);
   });
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target === popup) {
-      closeModal(popup);
-    }
-  });
+  popup.addEventListener('mousedown', handleClickOnOverlay);
 });

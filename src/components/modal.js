@@ -15,4 +15,10 @@ function closeModal(modalElement) {
   modalElement.classList.remove('popup_is-opened');
 }
 
-export { openModal, closeModal };
+function handleClickOnOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.target);
+  }
+}
+
+export { openModal, closeModal, handleClickOnOverlay };
