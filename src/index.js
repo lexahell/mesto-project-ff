@@ -2,7 +2,6 @@ import './pages/index.css';
 import initialCards from './data/cards.js';
 import {
   createCardElement,
-  handleCardImgClick,
   handleCardLikeClick,
   removeCardElement,
 } from './components/card.js';
@@ -24,6 +23,16 @@ const newPlaceForm = document.forms['new-place'];
 const editProfileForm = document.forms['edit-profile'];
 const nameInput = editProfileForm.elements.name;
 const descriptionInput = editProfileForm.elements.description;
+
+function handleCardImgClick(card) {
+  const popupTypeImage = document.querySelector('.popup_type_image');
+  const popupImage = popupTypeImage.querySelector('.popup__image');
+  const popupCaption = popupTypeImage.querySelector('.popup__caption');
+  popupImage.src = card.link;
+  popupImage.alt = card.name;
+  popupCaption.textContent = card.name;
+  openModal(popupTypeImage);
+}
 
 function handleEditProfileFormSubmit(evt) {
   evt.preventDefault();
